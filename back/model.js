@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
+mongoose.connect('mongodb://database-suipi-admin:play a game of suipi@@ds119930.mlab.com:19930/suipi-game-db');
+
 const userSchema = new Schema({
   fname: {
     type: String,
