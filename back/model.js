@@ -36,3 +36,34 @@ const userSchema = new Schema({
   },
   ranking: Number
 });
+
+userSchema.methods.setPassword = function (plainPassword, callback) {
+  var user = this;
+  bcrypt.hash(plainPassword, 12).then(function (hash) {
+    user.encrypted_password = hash;
+    callback();
+  });
+};
+
+userSchema.methods.verifyPassword = function (plainPassword, callback) {
+  bcrypt.compare(plainPassword, this.encrypted_password).then(function (valid) {
+    callback(valid);
+  });
+};
+
+userSchema.methods.simpleUser = function () {
+  return {
+    id: this._id,
+    fname: this.fname,
+    lname: this.lname,
+    age: this.age,
+    email: this.email,
+    friends: this.friends,
+    wins: this.wins,
+    losses: this.losses
+  }
+}
+
+var User = mongoose.model('User', userSchema);
+
+module.exports = { User: User };
