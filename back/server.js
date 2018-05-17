@@ -4,7 +4,7 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('passport-local');
 
-const model = require('./model');
+const userModel = require('./model/userModel');
 
 const app = express();
 
