@@ -2,16 +2,22 @@
   <div id="app">
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
+    <app-hand></app-hand>
   </div>
 </template>
 
 <script>
+import Hand from "./hand.vue";
+
 export default {
   name: 'app',
   data () {
     return {
       msg: 'DashBoard Page'
     }
+  },
+  components: {
+    "app-hand": Hand
   }
 }
 </script>

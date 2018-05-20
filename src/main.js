@@ -3,7 +3,9 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import Dashboard from './Dashboard.vue';
 import Home from './Home.vue';
+import Cards from 'deck-of-cards';
 
+Vue.use(Cards);
 Vue.use(VueRouter);
 
 const routes = [
