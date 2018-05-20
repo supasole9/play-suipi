@@ -4,12 +4,14 @@ const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('passport-local');
 
-const userModel = require('./model/userModel');
+const userModel = require('./models/userModel');
 
 const app = express();
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public"));
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -61,4 +63,13 @@ app.get("/me", function(req, res) {
   } else {
     res.sendStatus(401);
   }
+});
+
+app.post("/users", function(req, res) {
+  console.log(req.body);
+  res.sendStatus(201);
+})
+
+app.listen(9090, function () {
+     console.log("Server is ready and listening");
 });

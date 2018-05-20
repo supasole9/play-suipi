@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
-mongoose.connect('mongodb://database-suipi-admin:play a game of suipi@@ds119930.mlab.com:19930/suipi-game-db');
+mongoose.connect('mongodb://database-user:test@ds119930.mlab.com:19930/suipi-game-db');
 
 const userSchema = new Schema({
   fname: {
@@ -24,7 +24,7 @@ const userSchema = new Schema({
   encrypted_password:{
     type: String,
     required: [true, "Password is required"]
-  }
+  },
   friends: [],
   wins: {
     type: Number,
