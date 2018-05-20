@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('passport-local');
+const Cards = require("../cards.js");
 
 const userModel = require('./models/userModel');
 
