@@ -14,10 +14,20 @@ function deck(){
             cards.push( new card( n+1, this.names[n], this.suits[s] ) );
         }
     }
-
     return cards;
 }
 
+function shuffledDeck(){
+	var Deck = new deck();
+	for (var i = Deck.length - 1; i > 0; i--) {
+			var j = Math.floor(Math.random() * (i + 1));
+			var temp = Deck[i];
+			Deck[i] = Deck[j];
+			Deck[j] = temp;
+	}
+	return Deck
+}
+
 module.exports = {
-	deck: deck
+	deck: shuffledDeck
 }

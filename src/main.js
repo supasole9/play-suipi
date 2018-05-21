@@ -3,12 +3,12 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import Dashboard from './Dashboard.vue';
 import Home from './Home.vue';
-import Cards from 'deck-of-cards';
+import NewGame from './NewGame.vue';
 
-Vue.use(Cards);
 Vue.use(VueRouter);
 
 const routes = [
+  { path: '/newgame', component: NewGame },
   { path: '/dashboard', component: Dashboard },
   { path: '/', component: Home }
 ];

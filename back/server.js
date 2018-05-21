@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('passport-local');
-const Cards = require("../cards.js");
+const Cards = require("../gameLogic/cards.js");
 
 const userModel = require('./models/userModel');
 
@@ -67,8 +67,12 @@ app.get("/me", function(req, res) {
 });
 
 app.post("/users", function(req, res) {
-  console.log(req.body);
   res.sendStatus(201);
+});
+
+app.post("/newgame", function (req, res) {
+  var Deck = new Cards.deck();
+  res.send(JSON.stringify({ Deck: Deck }));
 })
 
 app.listen(9090, function () {

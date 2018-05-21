@@ -29,7 +29,7 @@ export default {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
-      }).then(function(res) {
+      }).then(function(res){
         if (res.status == 201) {
           thisState.$router.push("/dashboard");
         } else {

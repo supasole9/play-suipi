@@ -2,7 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <h1>{{ msg }}</h1>
-    <app-hand></app-hand>
+    <button v-on:click="newGame">Start New Game</button>
   </div>
 </template>
 
@@ -16,8 +16,13 @@ export default {
       msg: 'DashBoard Page'
     }
   },
+  methods: {
+    newGame: function () {
+      this.$router.push("/newgame");
+    }
+  },
   components: {
-    "app-hand": Hand
+
   }
 }
 </script>
