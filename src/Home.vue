@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     login: function () {
-      let encoded = "email=" + this.email + "&password=" + this.password;
+      let encoded = "email=" + this.email + "&password=" + this.password + "&fname=" + "Ross" + "&lname=" & "Salanoa" + "&age=" + "18";
       let thisState = this;
       fetch("http://localhost:9090/users", {
         body: encoded,
@@ -30,6 +30,7 @@ export default {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(function(res){
+        console.log(res)
         if (res.status == 201) {
           thisState.$router.push("/dashboard");
         } else {

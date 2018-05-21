@@ -67,7 +67,30 @@ app.get("/me", function(req, res) {
 });
 
 app.post("/users", function(req, res) {
-  res.sendStatus(201);
+  console.log(req.body)
+  var user = new userModel.User ({
+    fname: req.body.fname,
+    lname: req.body.lname,
+    email: req.body.email
+  });
+  user.setPassword(req.body.password, function () {
+    user.save().then(function () {
+      console.log("saving user")
+      res.status(201).json(user);
+    }, function (err) {
+      if (err.errors) {
+        var messages = {}
+        for (var e in err.errors) {
+          messages[e] = err.errors[e].message;
+        }
+        res.status(422).json(messages);
+      }
+      else {
+        console.log("Post /User - Internal Error")
+        res.sendStatus(500)
+      }
+    });
+  });
 });
 
 app.post("/newgame", function (req, res) {
