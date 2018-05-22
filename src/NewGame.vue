@@ -1,15 +1,17 @@
 <template>
   <div>
     <button v-on:click="newGame">Start</button>
-    <div v-for="card in deck">
-      <div>
-        {{ card.value }} {{ card.suit }}
-      </div>
-    </div>
+    <ul class="relative">
+      <li v-for="card in deck">
+        <card :name="card.name" :suit="card.suit" :value="card.value"></card>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import Card from "./card.vue";
+
 export default {
   name: 'app',
   data () {
@@ -34,6 +36,9 @@ export default {
   },
   created: function () {
     console.log("New Game Page");
+  },
+  components:{
+    'card': Card
   }
 }
 </script>
@@ -46,5 +51,20 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.relative{
+  /* position: relative; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+ul{
+  padding-left: 0;
+}
+
+li{
+  list-style: none;
+  margin-left: 0;
 }
 </style>

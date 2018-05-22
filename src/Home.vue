@@ -21,10 +21,11 @@ export default {
   },
   methods: {
     login: function () {
+      let session = "email=" + this.email + "&password=" + this.password;
       let encoded = "email=" + this.email + "&password=" + this.password + "&fname=" + "Ross" + "&lname=" & "Salanoa" + "&age=" + "18";
       let thisState = this;
-      fetch("http://localhost:9090/users", {
-        body: encoded,
+      fetch("http://localhost:9090/session", {
+        body: session,
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'

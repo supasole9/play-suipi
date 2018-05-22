@@ -11,7 +11,7 @@ const app = express();
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
+// app.use(express.static("public"));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -28,16 +28,20 @@ passport.use(new passportLocal.Strategy(
   function (email, password, done) {
   userModel.User.findOne({ email:email }).then(function (user) {
     if (!user) {
+      console.log("user not found");
       return done(null, false)
     }
     user.verifyPassword(password, function (valid) {
       if (valid) {
+        console.log("success");
         return done(null, user);
       } else {
+        console.log("bad password");
         return done(null, false);
       }
     });
   }, function (err) {
+    console.log("some error");
     return done(err)
   });
 }));
