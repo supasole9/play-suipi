@@ -3,7 +3,7 @@
     <button v-on:click="newGame">Start</button>
     <ul class="relative">
       <li v-for="card in deck">
-        <card :name="card.name" :suit="card.suit" :value="card.value"></card>
+        <card :name="card.name" :suit="card.suit" :value="card.value" :symbol="card.symbol"></card>
       </li>
     </ul>
   </div>
