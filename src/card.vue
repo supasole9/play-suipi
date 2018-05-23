@@ -14,18 +14,19 @@
         Value: this.value,
         Name: this.name,
         SSymbol: this.symbol,
-        isRed: function () {
-          if (this.suit == "Hearts" || this.suit == "Diamonds") {
-            return true
-          } else {
-            return false
-          }
-        }
+        isRed: false
       }
     },
     methods: {
       print: function () {
         console.log(this.suit, this.name)
+      }
+    },
+    created: function () {
+      if (this.suit == "Hearts" || this.suit == "Diamonds") {
+        this.isRed = true
+      } else {
+        this.isRed = false
       }
     }
   }
