@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-on:click="newGame">Start</button>
+    <button v-on:click="newGAME">Start</button>
     <ul class="relative">
       <li v-for="card in deck">
         <card :name="card.name" :suit="card.suit" :value="card.value" :symbol="card.symbol"></card>
@@ -32,10 +32,24 @@ export default {
       }).then(function(res) {
         thisState.deck = res.Deck;
       })
+    },
+    newGAME: function () {
+      this.socket.send(JSON.stringify({
+        action: "NewGame"
+      }))
     }
   },
   created: function () {
-    console.log("New Game Page");
+    // var HOST = location.origin.replace(/^http/, 'ws');
+    this.socket = new WebSocket("ws://localhost:9090");
+
+    this.socket.onopen = function () {
+      console.log("Were Ready");
+    };
+
+    this.socket.onmessage = function (event) {
+      console.log("Message Recived", event)
+    };
   },
   components:{
     'card': Card

@@ -34,7 +34,11 @@ const userSchema = new Schema({
     type: Number,
     default: 0
   },
-  ranking: Number
+  ranking: Number,
+  playing: {
+    type: Boolean,
+    default: false
+  }
 });
 
 userSchema.methods.setPassword = function (plainPassword, callback) {

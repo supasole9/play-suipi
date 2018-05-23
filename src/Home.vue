@@ -16,7 +16,8 @@ export default {
     return {
       email: '',
       password: '',
-      error: false
+      error: false,
+      socket: null
     }
   },
   methods: {
@@ -41,7 +42,7 @@ export default {
     }
   },
   created: function () {
-    console.log("working");
+    console.log('Home Page')
   },
   components: {
     'app-error': LoginError

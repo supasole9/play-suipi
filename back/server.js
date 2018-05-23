@@ -6,6 +6,8 @@ const passportLocal = require('passport-local');
 const Cards = require("../gameLogic/cards.js");
 
 const userModel = require('./models/userModel');
+const WebSocket = require('ws');
+const Check = require("../gameLogic/gamePlay")
 
 const app = express();
 
@@ -102,6 +104,23 @@ app.post("/newgame", function (req, res) {
   res.send(JSON.stringify({ Deck: Deck }));
 })
 
-app.listen(9090, function () {
-     console.log("Server is ready and listening");
+var server = app.listen(9090, function () {
+  console.log("server started");
 });
+
+const wss = new WebSocket.Server({ 'server': server });
+
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
+
+wss.on('connection', function(ws) {
+    ws.on('message', function (data) {
+      let json = JSON.parse(data);
+      Check.check(json, ws)
+    })
+})
