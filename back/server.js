@@ -13,7 +13,7 @@ const app = express();
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(express.static("public"));
+// app.use(express.static("/"));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -35,7 +35,6 @@ passport.use(new passportLocal.Strategy(
     }
     user.verifyPassword(password, function (valid) {
       if (valid) {
-        console.log("success");
         return done(null, user);
       } else {
         console.log("bad password");
@@ -49,6 +48,7 @@ passport.use(new passportLocal.Strategy(
 }));
 
 passport.serializeUser(function(user, done) {
+  console.log(user)
   done(null, user._id)
 });
 
@@ -58,7 +58,7 @@ passport.deserializeUser(function(id, done) {
   }, function (err) {
     done(err);
   });
-})
+});
 
 app.post("/session", passport.authenticate("local"), function (req,res) {
   res.sendStatus(201);
@@ -73,11 +73,11 @@ app.get("/me", function(req, res) {
 });
 
 app.post("/users", function(req, res) {
-  console.log(req.body)
   var user = new userModel.User ({
     fname: req.body.fname,
     lname: req.body.lname,
-    email: req.body.email
+    email: req.body.email,
+    age:  req.body.age
   });
   user.setPassword(req.body.password, function () {
     user.save().then(function () {

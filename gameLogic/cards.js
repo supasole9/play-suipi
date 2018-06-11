@@ -3,6 +3,7 @@ function card(value, name, suit, symbol){
 	this.name = name;
 	this.suit = suit;
 	this.symbol = symbol;
+	this.id = name+suit[0];
 }
 
 function deck(){
@@ -19,8 +20,7 @@ function deck(){
     return cards;
 }
 
-function shuffledDeck(){
-	var Deck = new deck();
+function shuffledDeck(Deck){
 	for (var i = Deck.length - 1; i > 0; i--) {
 			var j = Math.floor(Math.random() * (i + 1));
 			var temp = Deck[i];
@@ -30,6 +30,12 @@ function shuffledDeck(){
 	return Deck
 }
 
+function newDECK(){
+	let nDeck = deck();
+	return shuffledDeck(nDeck);
+}
+
 module.exports = {
-	deck: shuffledDeck
+	deck: newDECK,
+	shuffle: shuffledDeck
 }

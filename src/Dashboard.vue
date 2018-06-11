@@ -9,6 +9,14 @@
 <script>
 import Hand from "./hand.vue";
 
+var fetchUser = function () {
+     return fetch('http://localhost:9090/me', {
+       method: "GET"
+     }).then(function (response) {
+          return response.json();
+     });
+};
+
 export default {
   name: 'app',
   data () {
@@ -22,6 +30,18 @@ export default {
     }
   },
   components: {
+
+  },
+  created: function () {
+    let thisState = this;
+
+    // fetch('http://localhost:9090/me', {
+    //   method: "GET"
+    // }).then(function (res) {
+    //      if (res.status != 200) {
+    //        thisState.$router.push("/");
+    //      }
+    // });
 
   }
 }
@@ -39,16 +59,6 @@ export default {
 
 h1, h2 {
   font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
 }
 
 a {

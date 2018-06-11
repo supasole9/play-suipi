@@ -1,11 +1,26 @@
 <template>
   <div>
-    <button v-on:click="newGAME">Start</button>
-    <ul class="relative">
-      <li v-for="card in deck">
-        <card :name="card.name" :suit="card.suit" :value="card.value" :symbol="card.symbol"></card>
-      </li>
-    </ul>
+    <button v-if="game" v-on:click="newGAME">Start</button>
+    <div class="board">
+      <ul class="relative">
+        <li v-for="card in board" v-bind:key="card.id">
+          <card :name="card.name" :suit="card.suit" :value="card.value" :symbol="card.symbol"></card>
+        </li>
+      </ul>
+    </div>
+
+    <div class="hand">
+      <ul class="hand relative">
+        <li v-for="card in hand" v-bind:key="card.id">
+          <card :name="card.name"
+                :suit="card.suit"
+                :value="card.value"
+                :symbol="card.symbol"
+                v-on:discard="discard(card)"
+          ></card>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -13,10 +28,14 @@
 import Card from "./card.vue";
 
 export default {
-  name: 'app',
+  name: 'game',
   data () {
     return {
-      deck: []
+      board: [],
+      hand: [],
+      game: true,
+      showOption: false,
+      gameId: null
     }
   },
   methods: {
@@ -29,17 +48,27 @@ export default {
         }
       }).then(function(res){
         return res.json();
-      }).then(function(res) {
-        thisState.deck = res.Deck;
       })
     },
     newGAME: function () {
+      this.game = false;
       this.socket.send(JSON.stringify({
-        action: "NewGame"
+        action: "NewGame",
+        name:"Ross"
+      }))
+    },
+    discard: function(card){
+      this.hand.splice(card.key, 1);
+      this.socket.send(JSON.stringify({
+        action: "Game-Play",
+        adjective: "Discard",
+        gameId: this.gameId,
+        object: card
       }))
     }
   },
   created: function () {
+    let thisState = this;
     // var HOST = location.origin.replace(/^http/, 'ws');
     this.socket = new WebSocket("ws://localhost:9090");
 
@@ -48,13 +77,26 @@ export default {
     };
 
     this.socket.onmessage = function (event) {
-      console.log("Message Recived", event)
+      logMessages(event.data, thisState);
     };
   },
   components:{
     'card': Card
   }
-}
+};
+
+var logMessages = function (e, app) {
+  var data = JSON.parse(e);
+  if(data.action == "newGame") {
+    app.board = data.board;
+    app.hand = data.hand;
+    app.gameId = data.gameID;
+  } else if (data.action == "Play" && data.adjective == "Discarded") {
+    app.board = data.board;
+    app.hand = data.hand;
+  }
+};
+
 </script>
 
 <style>
@@ -67,8 +109,15 @@ export default {
   margin-top: 60px;
 }
 
+.board{
+  margin-top: 250px;
+  height: 200px;
+}
+
+.hand{
+  height: 25%;
+}
 .relative{
-  /* position: relative; */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

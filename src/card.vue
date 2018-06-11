@@ -1,7 +1,10 @@
 <template>
-  <div class="card" v-bind:class="{red: isRed}" v-on:click="print">
-    {{ Name }} <br>
-    <span v-html="SSymbol"></span>
+  <div class="card" v-bind:class="[{red: isRed}, {select: selected}]">
+    <span v-on:click="isSelected"> {{ Name }} </span> <br>
+    <span v-html="SSymbol"></span> <br>
+    <button type="button" v-if="selected" v-on:click="$emit('discard')">
+      Discard
+    </button>
   </div>
 </template>
 
@@ -14,12 +17,20 @@
         Value: this.value,
         Name: this.name,
         SSymbol: this.symbol,
+        selected: this.selected,
         isRed: false
       }
     },
     methods: {
       print: function () {
         console.log(this.suit, this.name)
+      },
+      isSelected: function(){
+        if (this.selected){
+          this.selected = false;
+        } else {
+          this.selected = true;
+        }
       }
     },
     created: function () {
@@ -47,6 +58,10 @@
 
 .red{
   color: red;
+}
+
+.selected{
+  color: blue;
 }
 
 </style>
