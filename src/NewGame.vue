@@ -4,7 +4,12 @@
     <div class="board">
       <ul class="relative">
         <li v-for="card in board" v-bind:key="card.id">
-          <card :name="card.name" :suit="card.suit" :value="card.value" :symbol="card.symbol"></card>
+          <card :name="card.name"
+                :suit="card.suit"
+                :value="card.value"
+                :symbol="card.symbol"
+                :cardType="'type-board'"
+          ></card>
         </li>
       </ul>
     </div>
@@ -16,6 +21,7 @@
                 :suit="card.suit"
                 :value="card.value"
                 :symbol="card.symbol"
+                :cardType="'type-hand'"
                 v-on:discard="discard(card)"
           ></card>
         </li>
@@ -35,7 +41,8 @@ export default {
       hand: [],
       game: true,
       showOption: false,
-      gameId: null
+      gameId: null,
+      socket: null
     }
   },
   methods: {

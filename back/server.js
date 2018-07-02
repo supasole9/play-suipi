@@ -100,7 +100,7 @@ app.post("/users", function(req, res) {
 });
 
 app.post("/newgame", function (req, res) {
-  var Deck = new Cards.deck();
+  let Deck = new Cards.deck();
   res.send(JSON.stringify({ Deck: Deck }));
 })
 

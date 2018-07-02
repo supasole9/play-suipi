@@ -10,7 +10,7 @@ const gameid = function () {
     string += alphabets.charAt(Math.floor(Math.random() * alphabets.length ));
   }
   return string
-}
+};
 
 const gameDeal = function (deck, p1, p2, game) {
   let checkDuplicate = [];
@@ -62,16 +62,16 @@ const gameDeal = function (deck, p1, p2, game) {
         boardCount--;
       }
   }
-  // console.log(p1.hand, p2.hand, game.board)
-}
+};
 
 function Player (data, ws) {
   this.playerName = data.name,
   this.playing = false,
   this.ws = ws,
   this.hand = [],
-  this.gameID = null
-}
+  this.gameID = null,
+  this.scoredDeck = []
+};
 
 function Game(player1, player2) {
   this.gameDeck = new Cards.deck,
@@ -97,7 +97,7 @@ const confirmSignIn = function (playerData, websocket) {
   websocket.send(JSON.stringify({
     action: "signupSuccess"
   }))
-}
+};
 
 const gamefind = function (person) {
   for (var aa in PLAYER_LIST) {
@@ -121,6 +121,8 @@ const gamePlayCheck = function (data, websocket, gameId) {
         GAME_LIST[game].board.push(data.object);
         if (GAME_LIST[game].player1.ws == websocket) {
           remove(GAME_LIST[game].player1.hand, data.object);
+          console.log(GAME_LIST[game].player1.hand)
+          console.log(GAME_LIST[game].board);
           GAME_LIST[game].player1.ws.send(JSON.stringify({action:"Play", adjective: "Discarded", hand: GAME_LIST[game].player1.hand, board:GAME_LIST[game].board}))
           GAME_LIST[game].player2.ws.send(JSON.stringify({action:"Play", adjective: "Discarded", hand: GAME_LIST[game].player2.hand, board:GAME_LIST[game].board}))
         } else if (GAME_LIST[game].player2.ws == websocket) {
@@ -130,6 +132,8 @@ const gamePlayCheck = function (data, websocket, gameId) {
         } else {
           console.log("error");
         }
+      } else if (data.adjective == "Match") {
+
       }
     }
   }

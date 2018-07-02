@@ -1,8 +1,11 @@
 <template>
-  <div class="card" v-bind:class="[{red: isRed}, {select: selected}]">
-    <span v-on:click="isSelected"> {{ Name }} </span> <br>
+  <div class="card" v-bind:class="[{red: isRed}, {select: selected}]" v-on:click="isSelected">
+    <span> {{ Name }} </span> <br>
     <span v-html="SSymbol"></span> <br>
-    <button type="button" v-if="selected" v-on:click="$emit('discard')">
+    <button type="button" v-if="selected && Ctype == 'type-board'" v-on:click="$emit('discard')">
+      Select
+    </button>
+    <button type="button" v-if="selected && Ctype == 'type-hand'" v-on:click="$emit('discard')">
       Discard
     </button>
   </div>
@@ -10,14 +13,15 @@
 
 <script>
   export default {
-    props: ['name', 'suit', 'value', 'symbol'],
+    props: ['name', 'suit', 'value', 'symbol', 'cardType'],
     data () {
       return {
         Suit: this.suit,
         Value: this.value,
         Name: this.name,
         SSymbol: this.symbol,
-        selected: this.selected,
+        selected: false,
+        Ctype: this.cardType,
         isRed: false
       }
     },
@@ -49,6 +53,7 @@
   border-color: #808080 #000000 #000000 #808080;
   border-width: 1px;
   border-style: solid;
+  background-color: white;
   color: #000000;
   font-size: 2rem;
   width:  3.75em;
@@ -60,8 +65,12 @@
   color: red;
 }
 
-.selected{
+.select{
+  margin: 2px;
   color: blue;
+  border: 3px solid blue;
+  box-shadow: 3px blue inset;
+  margin-top: -15px;
 }
 
 </style>
